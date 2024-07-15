@@ -1,0 +1,35 @@
+name: Setup and Run Project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-22.04
+    
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install n package manager
+      run: |
+        sudo npm cache clean -f
+        sudo npm install -g n
+        sudo n stable
+        sudo n latest
+
+    - name: Install Yarn
+      run: sudo apt -y install yarn
+
+    - name: Install TypeScript
+      run: npm install -g typescript
